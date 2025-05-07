@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Class Entry form</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="static/css/style.css">
+
+
+      
+</head>
+<body>
+    {% with msg=get_flashed_messages() %}
+    {% if msg %}
+    <script>
+        alert("{{msg[0]}}");
+    </script>
+    {% endif %}
+    {% endwith %}
+    <nav class="navbar">
+        <a href="#" class="navbar-brand">Admin Panel</a>
+        <div class="nav-menu">
+            <a href="{{url_for('admin_dashboard')}}" class="nav-item active">Home</a>
+
+            <div class="dropdown">
+                <a href="#" class="nav-item dropdown-toggle">Manage Dept</a>
+                <div class="dropdown-content">
+                    <a href="{{url_for('insert_dept')}}" class="dropdown-item">Add Dept</a>
+                    <a href="{{url_for('view_dept')}}" class="dropdown-item">View Dept</a>
+                </div>
+            </div>
+            
+            <div class="dropdown">
+                <a href="#" class="nav-item dropdown-toggle">Manage Staff</a>
+                <div class="dropdown-content">
+                    <a href="{{url_for('insert_staff')}}" class="dropdown-item">Add Staff</a>
+                    <a href="{{url_for('view_staff')}}" class="dropdown-item">View Staff</a>
+                </div>
+            </div>
+            
+            <div class="dropdown">
+                <a href="#" class="nav-item dropdown-toggle">Manage Subjects</a>
+                <div class="dropdown-content">
+                    <a href="{{url_for('insert_sub')}}" class="dropdown-item">Add Subject</a>
+                    <a href="{{url_for('view_subject')}}" class="dropdown-item">View Subjects</a>
+                </div>
+            </div>
+            
+            <div class="dropdown">
+                <a href="#" class="nav-item dropdown-toggle">Manage Attendance</a>
+                <div class="dropdown-content">
+                    <a href="{{url_for('insert_class')}}" class="dropdown-item">Add Attendance</a>
+                    <a href="{{url_for('view_class')}}" class="dropdown-item">View Attendance</a>
+                </div>
+            </div>
+            
+            <a href="{{url_for('update_admin')}}" class="nav-item">Update Admin</a>
+          
+            
+            <a href="{{url_for('generate_report')}}" class="nav-item">Manage Reports</a>
+            <a href="{{url_for('home')}}"class="nav-item" id="logout-link">
+                <span>Logout</span>
+                <i class="fas fa-sign-out-alt"></i>
+            </a>
+        </div>
+    </nav>
+
+
+
+    <div class="main-content">
+        <form action="#" method="POST" class="form-container" enctype="multipart/form-data">
+            <div class="label">CREATE CLASS (ATTENDANCE)</div>
+            <div class="input-group">
+                <label for="class-name">Class Name</label>
+                <input type="text" id="class-name" placeholder="Enter Class name" name="classname" required>
+            </div>
+    
+            <div class="input-group">
+                <label for="class-id">Class Id</label>
+                <input type="number" id="class-id" placeholder="Enter Class Id" name="classid" required>
+            </div>
+    
+            <div class="input-group">
+                <label for="dept">Department</label>
+                <select id="dept" name="dept">
+                    {% for department in departments %}
+                        <option>{{ department }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+    
+            <div class="input-group">
+                <label for="year">Year</label>
+                <select id="year" name="year">
+                    <option>I</option>
+                    <option>II</option>
+                    <option>III</option>
+                </select>
+            </div>
+    
+            <div class="input-group">
+                <label for="sem">Semester</label>
+                <select id="sem" name="sem">
+                    <option>1</option>
+                    <option>2</option>
+                    <option>3</option>
+                    <option>4</option>
+                    <option>5</option>
+                    <option>6</option>
+                </select>
+            </div>
+    
+        
+            <div class="input-group">
+                <label>Select Staffs:</label>
+                <div class="staff-checkboxes">
+                    {% for staff in staff_list %}
+                    <div class="staff-option">
+                        <input type="checkbox" id="staff_{{ staff[0] }}" name="staffsid" value="{{ staff[0] }}">
+                        <label for="staff_{{ staff[0] }}">{{ staff[1] }} (ID: {{ staff[0] }})</label>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+
+            <div class="input-group">
+                <label for="file">Upload your student details Excel file</label>
+                <input type="file" name="file" accept=".xlsx, .xls" class="file-upload" required>       
+            </div>
+
+            <div class="button-group">
+                <button type="submit" class="submit-btn">ADD CLASS</button>
+                <button type="reset" class="clear-btn">Clear</button>
+            </div>
+        </form>
+    </div>
+
+    <footer class="footer">
+        <p class="copyright">© 2025 computerstudents@mspvl All Rights Reserved.</p>
+    </footer>
+</body>
+</html>
